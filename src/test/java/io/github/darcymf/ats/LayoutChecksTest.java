@@ -33,11 +33,21 @@ class LayoutChecksTest {
     @Test
     void realSidebarTemplateIsFlagged() throws Exception {
         // made in Chrome from a typical template: big spaced-out name across the top, then a sidebar
-        byte[] pdf;
-        try (var in = getClass().getResourceAsStream("/fixtures/sidebar-resume.pdf")) {
-            pdf = in.readAllBytes();
+        assertThat(new ColumnCheck().run(extractor.extract(fixture("sidebar-resume.pdf"))).status())
+                .isEqualTo(Status.WARN);
+    }
+
+    @Test
+    void sparseSidebarIsFlagged() throws Exception {
+        // a few short skill words beside a lot of main text
+        assertThat(new ColumnCheck().run(extractor.extract(fixture("sparse-sidebar-resume.pdf"))).status())
+                .isEqualTo(Status.WARN);
+    }
+
+    private byte[] fixture(String name) throws Exception {
+        try (var in = getClass().getResourceAsStream("/fixtures/" + name)) {
+            return in.readAllBytes();
         }
-        assertThat(new ColumnCheck().run(extractor.extract(pdf)).status()).isEqualTo(Status.WARN);
     }
 
     @Test

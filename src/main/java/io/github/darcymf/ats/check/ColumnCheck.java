@@ -28,8 +28,10 @@ public class ColumnCheck implements Check {
     static final int MIN_LINES = 10;
     /** A strip is a gap if no more than this share of lines cross it (leaves room for a header). */
     static final double MAX_CROSSING = 0.15;
-    /** Each side of the gap needs at least this share of the page's text. */
-    static final double MIN_SIDE_SHARE = 0.12;
+    /** Each side of the gap needs at least this share of the page's text. Sidebars can be sparse. */
+    static final double MIN_SIDE_SHARE = 0.03;
+    /** ...and at least this many characters, so a stray word in the margin doesn't count. */
+    static final int MIN_SIDE_GLYPHS = 30;
     /** Characters within this many points of each other vertically are on the same line. */
     static final float LINE_TOLERANCE = 2f;
 
@@ -91,8 +93,10 @@ public class ColumnCheck implements Check {
             if (crossing[s] <= gapBelow && crossing[s + 1] <= gapBelow) {
                 int before = 0;
                 for (int k = left; k < s; k++) before += startsIn[k];
+                int after = glyphs.size() - before;
                 double leftShare = (double) before / glyphs.size();
-                if (leftShare >= MIN_SIDE_SHARE && leftShare <= 1 - MIN_SIDE_SHARE) {
+                boolean bothSides = Math.min(before, after) >= MIN_SIDE_GLYPHS;
+                if (bothSides && leftShare >= MIN_SIDE_SHARE && leftShare <= 1 - MIN_SIDE_SHARE) {
                     return true;
                 }
             }

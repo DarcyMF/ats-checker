@@ -73,7 +73,7 @@ To work on the page with hot reload, run `mvn spring-boot:run` and `npm run dev`
 mvn test
 ```
 
-41 JUnit tests. Most of the test PDFs are generated in code with PDFBox (a two-column page, a scanned page, a page with right-aligned dates). One real sidebar template made in Chrome is kept as a fixture, because it caught a bug the generated PDFs missed. GitHub Actions runs the tests, builds the front end and builds the Docker image on every push.
+42 JUnit tests. Most of the test PDFs are generated in code with PDFBox (a two-column page, a scanned page, a page with right-aligned dates). Two realistic bad resumes are kept as fixtures, because they caught column bugs the generated PDFs missed. GitHub Actions runs the tests, builds the front end and builds the Docker image on every push.
 
 ## Deploying
 
