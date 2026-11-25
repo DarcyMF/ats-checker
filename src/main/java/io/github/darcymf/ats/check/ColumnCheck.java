@@ -1,30 +1,37 @@
 package io.github.darcymf.ats.check;
 
 import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.github.darcymf.ats.pdf.ResumeDocument;
 import io.github.darcymf.ats.pdf.ResumeDocument.Glyph;
 import io.github.darcymf.ats.pdf.ResumeDocument.PageLayout;
 
 /**
- * Looks for a vertical gap that runs down the middle of the page with text on both sides.
+ * Looks for a vertical gap that runs down the page with text on both sides.
  * A basic parser reads straight across that gap and mixes lines from the two columns.
  *
- * The page is cut into thin vertical strips and we count how many characters touch each strip.
- * In a one-column resume every strip in the middle is busy, because full-width lines cross it.
- * Dates pushed to the right edge don't count, since the bullet points below them still cross
- * the middle.
+ * The page is cut into thin vertical strips, and for each strip we count how many lines of text
+ * cross it. In a one-column resume most lines cross the middle, so every strip there is busy.
+ * In a two-column resume almost nothing crosses the gap between the columns, except maybe a
+ * full-width name and contact line at the top. Dates pushed to the right edge don't count,
+ * because the bullet points below them still cross the middle.
  */
 public class ColumnCheck implements Check {
 
     static final int STRIPS = 120;
     /** Pages with fewer characters than this don't have enough text to judge. */
     static final int MIN_GLYPHS = 150;
-    /** A strip counts as empty if it's this quiet compared to a normal strip. */
-    static final double EMPTY_RATIO = 0.08;
+    static final int MIN_LINES = 10;
+    /** A strip is a gap if no more than this share of lines cross it (leaves room for a header). */
+    static final double MAX_CROSSING = 0.15;
     /** Each side of the gap needs at least this share of the page's text. */
     static final double MIN_SIDE_SHARE = 0.12;
+    /** Characters within this many points of each other vertically are on the same line. */
+    static final float LINE_TOLERANCE = 2f;
 
     @Override
     public CheckResult run(ResumeDocument doc) {
@@ -49,32 +56,39 @@ public class ColumnCheck implements Check {
         if (glyphs.size() < MIN_GLYPHS || page.width() <= 0) {
             return false;
         }
-        int[] cover = new int[STRIPS];
+
+        // which strips each line of text touches
+        Map<Integer, BitSet> lines = new HashMap<>();
         int[] startsIn = new int[STRIPS];
         for (Glyph g : glyphs) {
             int from = strip(g.x(), page.width());
             int to = strip(g.x() + Math.max(g.width(), 0.1f), page.width());
-            for (int s = from; s <= to; s++) {
-                cover[s]++;
-            }
+            lines.computeIfAbsent(Math.round(g.y() / LINE_TOLERANCE), k -> new BitSet(STRIPS)).set(from, to + 1);
             startsIn[from]++;
         }
+        if (lines.size() < MIN_LINES) {
+            return false;
+        }
 
-        int left = 0;
-        while (left < STRIPS && cover[left] == 0) left++;
-        int right = STRIPS - 1;
-        while (right >= 0 && cover[right] == 0) right--;
+        int[] crossing = new int[STRIPS];
+        BitSet any = new BitSet(STRIPS);
+        for (BitSet line : lines.values()) {
+            any.or(line);
+            for (int s = line.nextSetBit(0); s >= 0; s = line.nextSetBit(s + 1)) {
+                crossing[s]++;
+            }
+        }
+        int left = any.nextSetBit(0);
+        int right = any.length() - 1;
         if (right - left < 10) {
             return false;
         }
 
-        double normal = median(cover, left, right);
-        double emptyBelow = Math.max(1, normal * EMPTY_RATIO);
+        double gapBelow = lines.size() * MAX_CROSSING;
         int margin = (int) ((right - left) * 0.15);
-
-        // Look for a run of at least two quiet strips away from the edges.
+        // look for two quiet strips side by side, away from the edges
         for (int s = left + margin; s < right - margin; s++) {
-            if (cover[s] <= emptyBelow && cover[s + 1] <= emptyBelow) {
+            if (crossing[s] <= gapBelow && crossing[s + 1] <= gapBelow) {
                 int before = 0;
                 for (int k = left; k < s; k++) before += startsIn[k];
                 double leftShare = (double) before / glyphs.size();
@@ -89,11 +103,5 @@ public class ColumnCheck implements Check {
     private static int strip(float x, float width) {
         int s = (int) (x / width * STRIPS);
         return Math.max(0, Math.min(STRIPS - 1, s));
-    }
-
-    private static double median(int[] values, int from, int to) {
-        int[] copy = java.util.Arrays.copyOfRange(values, from, to + 1);
-        java.util.Arrays.sort(copy);
-        return copy[copy.length / 2];
     }
 }

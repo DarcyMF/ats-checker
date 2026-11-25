@@ -25,6 +25,22 @@ class LayoutChecksTest {
     }
 
     @Test
+    void fullWidthHeaderDoesntHideTheColumns() {
+        assertThat(new ColumnCheck().run(extractor.extract(TestPdfs.twoColumnWithHeader())).status())
+                .isEqualTo(Status.WARN);
+    }
+
+    @Test
+    void realSidebarTemplateIsFlagged() throws Exception {
+        // made in Chrome from a typical template: big spaced-out name across the top, then a sidebar
+        byte[] pdf;
+        try (var in = getClass().getResourceAsStream("/fixtures/sidebar-resume.pdf")) {
+            pdf = in.readAllBytes();
+        }
+        assertThat(new ColumnCheck().run(extractor.extract(pdf)).status()).isEqualTo(Status.WARN);
+    }
+
+    @Test
     void oneColumnPasses() {
         assertThat(new ColumnCheck().run(extractor.extract(TestPdfs.singleColumn())).status())
                 .isEqualTo(Status.PASS);

@@ -87,6 +87,29 @@ public final class TestPdfs {
         }
     }
 
+    /** Name and contact line across the full width, then a sidebar. The most common template. */
+    public static byte[] twoColumnWithHeader() {
+        try (PDDocument doc = new PDDocument()) {
+            PDPage page = new PDPage(PDRectangle.A4);
+            doc.addPage(page);
+            try (PDPageContentStream cs = new PDPageContentStream(doc, page)) {
+                float y = PAGE_TOP;
+                text(cs, 40, y, "Jordan Smith                                        Software Developer                    Brisbane");
+                y -= LINE;
+                text(cs, 40, y, "0412 345 678 | jordan@example.com | linkedin.com/in/jordansmith | github.com/jordansmith");
+                y -= LINE * 2;
+                for (int i = 0; i < 25; i++) {
+                    text(cs, 40, y, "Skill " + i);
+                    text(cs, 200, y, "Did some work on a project " + i + " and shipped it on time");
+                    y -= LINE;
+                }
+            }
+            return save(doc);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+
     /** What you get from scanning a printed resume: one picture, no text. */
     public static byte[] imageOnly() {
         try (PDDocument doc = new PDDocument()) {
