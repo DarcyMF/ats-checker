@@ -44,7 +44,7 @@ public class ContactCheck implements Check {
                 "Email and phone number both read correctly.", details, null);
     }
 
-    static boolean findPhone(String text) {
+    public static boolean findPhone(String text) {
         Matcher m = PHONE_LIKE.matcher(text);
         while (m.find()) {
             String candidate = m.group();

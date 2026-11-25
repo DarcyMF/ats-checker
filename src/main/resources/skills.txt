@@ -1,6 +1,8 @@
 # One skill per line: the name to show, then other ways job ads write it.
 # Separate with |. Short names (2 letters or less) are matched case-sensitively,
 # so "C" and "R" don't match the letters c and r in normal text.
+# A leading = makes a name case-sensitive too, for skills that are also normal words:
+# "React" the library vs "react quickly", "Excel" vs "excel at".
 # "Go" is left out on purpose: it matches too many normal sentences. "Golang" covers it.
 
 # Languages
@@ -14,7 +16,7 @@ TypeScript
 Golang
 Rust
 Kotlin
-Swift
+=Swift
 Ruby
 PHP
 Scala
@@ -37,23 +39,23 @@ CSS | CSS3
 Sass | SCSS
 
 # Web
-React | React.js | ReactJS
+=React | React.js | ReactJS
 Next.js | NextJS
 Angular | AngularJS
 Vue | Vue.js | VueJS
 Svelte
 Node.js | NodeJS | Node JS
-Express | Express.js
+Express.js | ExpressJS
 Django
 Flask
 FastAPI
 Spring Boot
-Spring | Spring Framework | Spring MVC
+Spring Framework | Spring MVC
 Hibernate | JPA
 ASP.NET
 .NET | dotnet | .NET Core
 Laravel
-Ruby on Rails | Rails
+Ruby on Rails
 Tailwind | Tailwind CSS
 Bootstrap
 jQuery
@@ -87,7 +89,7 @@ Snowflake
 BigQuery
 Kafka
 RabbitMQ
-Spark | Apache Spark | PySpark
+Apache Spark | PySpark | =Spark
 Hadoop
 Airflow
 dbt
@@ -101,7 +103,7 @@ OpenCV
 Jupyter
 Power BI | PowerBI
 Tableau
-Excel
+Microsoft Excel | =Excel
 ETL
 Data warehouse | Data warehousing
 Data analysis | Data analytics
@@ -126,7 +128,7 @@ Lambda | AWS Lambda
 EC2
 S3
 CloudFormation
-Helm
+=Helm
 Prometheus
 Grafana
 Datadog
@@ -170,16 +172,16 @@ Distributed systems
 System design
 API | APIs
 OAuth
-Security | Cyber security | Cybersecurity
+Cyber security | Cybersecurity | Information security
 
 # Embedded
-Embedded | Embedded systems | Embedded software
+Embedded systems | Embedded software | Embedded C
 Firmware
 RTOS | FreeRTOS
 STM32
 Arduino
 Raspberry Pi
-ARM
+=ARM
 Microcontroller | Microcontrollers
 I2C
 SPI

@@ -12,7 +12,7 @@ record Skill(String name, List<Pattern> patterns) {
 
     static Skill parse(String line) {
         String[] parts = line.split("\\|");
-        String name = parts[0].trim();
+        String name = parts[0].trim().replaceFirst("^=", "");
         List<Pattern> patterns = java.util.Arrays.stream(parts)
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
@@ -22,9 +22,11 @@ record Skill(String name, List<Pattern> patterns) {
     }
 
     private static Pattern compile(String alias) {
+        boolean exactCase = alias.startsWith("=") || alias.length() <= 2;
+        alias = alias.replaceFirst("^=", "");
         // Let "REST API" also match "REST  API" or a line break between the words.
         String body = Pattern.quote(alias).replace(" ", "\\E\\s+\\Q");
-        int flags = alias.length() <= 2 ? 0 : Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
+        int flags = exactCase ? 0 : Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
         return Pattern.compile(BEFORE + body + AFTER, flags);
     }
 
