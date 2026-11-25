@@ -1,0 +1,216 @@
+# One skill per line: the name to show, then other ways job ads write it.
+# Separate with |. Short names (2 letters or less) are matched case-sensitively,
+# so "C" and "R" don't match the letters c and r in normal text.
+# "Go" is left out on purpose: it matches too many normal sentences. "Golang" covers it.
+
+# Languages
+Java
+Python
+C
+C++ | CPP
+C# | C Sharp
+JavaScript | JS | ES6 | ECMAScript
+TypeScript
+Golang
+Rust
+Kotlin
+Swift
+Ruby
+PHP
+Scala
+R
+MATLAB
+SQL
+Bash | Shell scripting
+PowerShell
+Dart
+Objective-C
+Haskell
+Perl
+Lua
+Elixir
+Assembly
+VHDL
+Verilog
+HTML | HTML5
+CSS | CSS3
+Sass | SCSS
+
+# Web
+React | React.js | ReactJS
+Next.js | NextJS
+Angular | AngularJS
+Vue | Vue.js | VueJS
+Svelte
+Node.js | NodeJS | Node JS
+Express | Express.js
+Django
+Flask
+FastAPI
+Spring Boot
+Spring | Spring Framework | Spring MVC
+Hibernate | JPA
+ASP.NET
+.NET | dotnet | .NET Core
+Laravel
+Ruby on Rails | Rails
+Tailwind | Tailwind CSS
+Bootstrap
+jQuery
+GraphQL
+REST | RESTful | REST API | REST APIs
+Redux
+Webpack
+Vite
+WordPress
+
+# Mobile
+React Native
+Flutter
+Android
+iOS
+SwiftUI
+Xamarin
+
+# Databases and data
+PostgreSQL | Postgres
+MySQL
+SQL Server | MSSQL
+Oracle
+SQLite
+MongoDB
+Redis
+DynamoDB
+Cassandra
+Elasticsearch
+Snowflake
+BigQuery
+Kafka
+RabbitMQ
+Spark | Apache Spark | PySpark
+Hadoop
+Airflow
+dbt
+Pandas
+NumPy
+scikit-learn | sklearn
+TensorFlow
+PyTorch
+Keras
+OpenCV
+Jupyter
+Power BI | PowerBI
+Tableau
+Excel
+ETL
+Data warehouse | Data warehousing
+Data analysis | Data analytics
+
+# Cloud and DevOps
+AWS | Amazon Web Services
+Azure | Microsoft Azure
+GCP | Google Cloud
+Docker
+Kubernetes | K8s
+Terraform
+Ansible
+Jenkins
+GitHub Actions
+GitLab CI
+CI/CD | CI / CD | Continuous integration | Continuous delivery | Continuous deployment
+Linux
+Unix
+Nginx
+Serverless
+Lambda | AWS Lambda
+EC2
+S3
+CloudFormation
+Helm
+Prometheus
+Grafana
+Datadog
+Vercel
+Heroku
+Firebase
+Supabase
+Microservices
+
+# Testing
+JUnit
+Mockito
+pytest
+Jest
+Vitest
+Cypress
+Playwright
+Selenium
+Unit testing | Unit tests | Unit test
+Integration testing | Integration tests
+TDD | Test-driven development | Test driven development
+Automated testing | Test automation
+
+# Ways of working
+Git
+GitHub
+GitLab
+Bitbucket
+Jira
+Confluence
+Agile
+Scrum
+Kanban
+Code review | Code reviews
+OOP | Object-oriented | Object oriented
+Design patterns
+Data structures
+Algorithms
+Concurrency | Multithreading | Multi-threading | Multithreaded
+Distributed systems
+System design
+API | APIs
+OAuth
+Security | Cyber security | Cybersecurity
+
+# Embedded
+Embedded | Embedded systems | Embedded software
+Firmware
+RTOS | FreeRTOS
+STM32
+Arduino
+Raspberry Pi
+ARM
+Microcontroller | Microcontrollers
+I2C
+SPI
+UART
+CAN bus
+PLC
+FPGA
+
+# AI
+Machine learning | ML
+Deep learning
+NLP | Natural language processing
+LLM | LLMs | Large language models
+Generative AI | GenAI
+Computer vision
+Prompt engineering
+LangChain
+
+# IT and business tools
+Salesforce
+SAP
+ServiceNow
+Figma
+UX | User experience
+UI | User interface
+Windows
+macOS
+Active Directory
+Networking
+TCP/IP
+DNS
+Microsoft 365 | Office 365 | M365
+Intune
+ITIL
