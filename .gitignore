@@ -1,0 +1,11 @@
+target/
+*.class
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+frontend/node_modules/
+frontend/dist/
+# the built front end gets copied here, don't commit it
+src/main/resources/static/
