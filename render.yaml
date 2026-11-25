@@ -1,0 +1,7 @@
+# Render free tier: builds the Dockerfile and runs it.
+services:
+  - type: web
+    name: ats-checker
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
